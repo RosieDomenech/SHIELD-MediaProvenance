@@ -1,7 +1,8 @@
 # SHIELD: Signed Hash Infrastructure for Evidence-Linked Digital Content
 ### Scenario 10: Media Provenance & Deepfake Defense
-#CS-GY 6903: Applied Cryptography - NYU Tandon School of Engineering#
 **Cryptographic Systems Design Report**
+CS-GY 6903: Applied Cryptography - NYU Tandon School of Engineering
+
 
 > *Rosie Domenech | GitHub: [RosieDomenech](https://github.com/RosieDomenech)*
 

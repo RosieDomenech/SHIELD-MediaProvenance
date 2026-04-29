@@ -1,5 +1,5 @@
 # SHIELD: Signed Hash Infrastructure for Evidence-Linked Digital Content
-### Scenario 10 — Media Provenance & Deepfake Defense
+### Scenario 10: Media Provenance & Deepfake Defense
 **Cryptographic Systems Design Report**
 
 > *Rosie Domenech | GitHub: [RosieDomenech](https://github.com/RosieDomenech)*
@@ -31,7 +31,7 @@ _Figure 1: C2PA Manifest Assembly & Data Flow Diagram_
 
 ### 1.1 Problem Statement
 
-The proliferation of AI-generated synthetic media — commonly called "deepfakes" — presents an existential threat to the epistemic integrity of digital journalism. Modern generative models can convincingly fabricate facial expressions, voices, and entire scenes, making it impossible for a human observer to distinguish authentic footage from fabricated content by inspection alone. News organizations require a cryptographically verifiable chain of custody, established at the precise moment of capture, that travels with the media asset through its entire lifecycle: from the journalist's camera to the publisher's server to the end consumer's browser.
+The proliferation of AI-generated synthetic media - commonly called "deepfakes" - presents an existential threat to the epistemic integrity of digital journalism. Modern generative models can convincingly fabricate facial expressions, voices, and entire scenes, making it impossible for a human observer to distinguish authentic footage from fabricated content by inspection alone. News organizations require a cryptographically verifiable chain of custody, established at the precise moment of capture, that travels with the media asset through its entire lifecycle: from the journalist's camera to the publisher's server to the end consumer's browser.
 
 SHIELD addresses this problem by combining device-level hardware-backed digital signatures, a hierarchical Public Key Infrastructure (PKI), a C2PA-compatible content manifest, and a trusted timestamping service to produce a tamper-evident, publicly verifiable provenance record for every piece of digital media captured by participating organizations.
 
@@ -60,7 +60,7 @@ The SHIELD system consists of five principal components:
 │         ▼                    ▼                                          │
 │  ┌──────────────────────────────────────────────────────────────────┐   │
 │  │              CONTENT DELIVERY & DISTRIBUTION LAYER               │   │
-│  │         (CDN / CMS — stores media + C2PA manifest)               │   │
+│  │         (CDN / CMS - stores media + C2PA manifest)               │   │
 │  └──────────────────────────────────────────────────────────────────┘   │
 │                               │                                         │
 │                               ▼                                         │
@@ -86,7 +86,7 @@ The SHIELD system consists of five principal components:
 ### 1.3 C2PA Manifest Data Flow
 
 ![SHIELD C2PA Manifest Assembly & Data Flow](diagrams/dataflow_diagram.png)
-*Figure 1: C2PA Manifest Assembly & Data Flow — from capture through org co-signing to the final tamper-evident asset package*
+*Figure 1: C2PA Manifest Assembly & Data Flow - from capture through org co-signing to the final tamper-evident asset package*
 
 ---
 
@@ -101,14 +101,14 @@ A well-scoped trust model explicitly defines what the system relies upon and whe
 - TLS 1.3 correctly protects communications between all components.
 
 **Not Trusted:**
-- The network (assumed hostile — all communications treated as potentially intercepted or modified).
-- The cloud CDN or CMS layer (treated as an untrusted storage medium — integrity is verified cryptographically, not assumed).
+- The network (assumed hostile - all communications treated as potentially intercepted or modified).
+- The cloud CDN or CMS layer (treated as an untrusted storage medium - integrity is verified cryptographically, not assumed).
 - The end consumer's device (the verifier is stateless and cryptographic, requiring no trust in the client).
 - Any intermediary between the camera and the signing server.
 
 **Explicitly Out of Scope:**
 - Physical coercion of a journalist to fabricate a scene before capture.
-- Compromise of the Root CA private key (a systemic failure requiring certificate revocation and ecosystem rebuild — this is an assumption all PKI systems make).
+- Compromise of the Root CA private key (a systemic failure requiring certificate revocation and ecosystem rebuild - this is an assumption all PKI systems make).
 
 ---
 
@@ -116,7 +116,7 @@ A well-scoped trust model explicitly defines what the system relies upon and whe
 
 ### 3.1 Adversary Profile
 
-The primary adversary is a sophisticated, motivated attacker — such as a state-sponsored disinformation actor — who wishes to either inject fabricated media that appears authentic, or discredit genuine authentic media by making verifiable provenance appear to fail. Secondary adversaries include opportunistic tamperers and insider threats at the news organization.
+The primary adversary is a sophisticated, motivated attacker - such as a state-sponsored disinformation actor - who wishes to either inject fabricated media that appears authentic, or discredit genuine authentic media by making verifiable provenance appear to fail. Secondary adversaries include opportunistic tamperers and insider threats at the news organization.
 
 ### 3.2 Attack Vectors and Mitigations
 
@@ -124,7 +124,7 @@ The primary adversary is a sophisticated, motivated attacker — such as a state
 
 **Attack:** An attacker positioned on the network between the capture device and the org signing server intercepts the raw media file in transit, gaining access to unpublished footage.
 
-**Mitigation:** All communications between system components are wrapped in TLS 1.3 with certificate pinning. The device only connects to a signing server whose leaf certificate chains to the organization's pinned intermediate CA. Passive eavesdropping yields only ciphertext encrypted under ephemeral session keys derived via X25519 key agreement — computationally infeasible to decrypt.
+**Mitigation:** All communications between system components are wrapped in TLS 1.3 with certificate pinning. The device only connects to a signing server whose leaf certificate chains to the organization's pinned intermediate CA. Passive eavesdropping yields only ciphertext encrypted under ephemeral session keys derived via X25519 key agreement - computationally infeasible to decrypt.
 
 ---
 
@@ -148,7 +148,7 @@ The primary adversary is a sophisticated, motivated attacker — such as a state
 
 **Attack:** An attacker captures a previously valid, signed media package and re-publishes it in a new context (e.g., replaying footage from one incident and claiming it depicts a different event today).
 
-**Mitigation:** The RFC 3161 trusted timestamp token is embedded in the manifest and cryptographically binds the content hash to a specific point in time. The timestamp token is itself signed by the TSA's private key. A verifier can confirm that the media was signed at a specific date and time — context manipulation is detectable by the discrepancy between the embedded timestamp and the claimed publication date. Additionally, the manifest includes the geographic coordinates (GPS EXIF data) of capture when available, further anchoring provenance.
+**Mitigation:** The RFC 3161 trusted timestamp token is embedded in the manifest and cryptographically binds the content hash to a specific point in time. The timestamp token is itself signed by the TSA's private key. A verifier can confirm that the media was signed at a specific date and time - context manipulation is detectable by the discrepancy between the embedded timestamp and the claimed publication date. Additionally, the manifest includes the geographic coordinates (GPS EXIF data) of capture when available, further anchoring provenance.
 
 ---
 
@@ -164,7 +164,7 @@ The primary adversary is a sophisticated, motivated attacker — such as a state
 
 **Attack:** Against the content hash function, an attacker attempts to find two different media files that produce the same hash value, allowing a fabricated file to pass hash verification.
 
-**Mitigation:** The system uses SHA-256 (256-bit output), providing a collision resistance of 2^128 operations — well beyond the computational reach of any known classical or near-term quantum adversary. The hash is also bound to the signature, meaning a collision is useless unless the attacker can also forge the signature, which requires breaking Ed25519 — a separate and independent hardness assumption. Upgrading to SHA-3-256 is planned as a defense-in-depth measure given its different internal construction (Keccak sponge vs. SHA-2 Merkle-Damgård).
+**Mitigation:** The system uses SHA-256 (256-bit output), providing a collision resistance of 2^128 operations - well beyond the computational reach of any known classical or near-term quantum adversary. The hash is also bound to the signature, meaning a collision is useless unless the attacker can also forge the signature, which requires breaking Ed25519 - a separate and independent hardness assumption. Upgrading to SHA-3-256 is planned as a defense-in-depth measure given its different internal construction (Keccak sponge vs. SHA-2 Merkle-Damgård).
 
 ---
 
@@ -178,9 +178,9 @@ The primary adversary is a sophisticated, motivated attacker — such as a state
 
 #### 3.2.8 Deepfake Substitution Post-Capture
 
-**Attack:** A sophisticated attacker does not tamper with the signed manifest but generates a deepfake that, when run through the SHA-256 hash function, produces the same hash as the original (a collision attack) — or they attempt to strip the manifest from the file and re-attach it to a fabricated file.
+**Attack:** A sophisticated attacker does not tamper with the signed manifest but generates a deepfake that, when run through the SHA-256 hash function, produces the same hash as the original (a collision attack) - or they attempt to strip the manifest from the file and re-attach it to a fabricated file.
 
-**Mitigation:** The manifest binds hash to file through a signature, not just a hash comparison. Stripping and re-attaching the manifest to a different file produces a hash mismatch detectable at verification. True SHA-256 collision attacks are computationally infeasible at 2^128 complexity. For the specific case of AI-generated substitution, the system supplements cryptographic verification with C2PA's "active manifest" model, where editing tools that support C2PA append modification assertions to the manifest — the absence of a capture-origin assertion in a modified file is itself a verifiable signal.
+**Mitigation:** The manifest binds hash to file through a signature, not just a hash comparison. Stripping and re-attaching the manifest to a different file produces a hash mismatch detectable at verification. True SHA-256 collision attacks are computationally infeasible at 2^128 complexity. For the specific case of AI-generated substitution, the system supplements cryptographic verification with C2PA's "active manifest" model, where editing tools that support C2PA append modification assertions to the manifest - the absence of a capture-origin assertion in a modified file is itself a verifiable signal.
 
 ---
 
@@ -295,10 +295,10 @@ _Figure 2: SHIELD End-to-End Sequence Diagram_
     i. Recompute SHA-256(media_bytes) and compare to H_content in Claim.
 
 15. Verification result returned:
-    ✅ AUTHENTIC — captured by [device ID] at [timestamp], signed by [org name]
-    ❌ TAMPERED  — content hash mismatch detected
-    ❌ REVOKED   — signing certificate revoked on [date]
-    ❌ INVALID   — signature chain broken
+    ✅ AUTHENTIC - captured by [device ID] at [timestamp], signed by [org name]
+    ❌ TAMPERED  - content hash mismatch detected
+    ❌ REVOKED   - signing certificate revoked on [date]
+    ❌ INVALID   - signature chain broken
 ```
 
 ---
@@ -306,7 +306,7 @@ _Figure 2: SHIELD End-to-End Sequence Diagram_
 ### 4.6 Protocol Sequence Diagram
 
 ![SHIELD Protocol Sequence Diagram](diagrams/sequence_diagram.png)
-*Figure 2: End-to-End Protocol Sequence — from device enrollment through consumer verification. Solid arrows = requests, dashed = responses.*
+*Figure 2: End-to-End Protocol Sequence - from device enrollment through consumer verification. Solid arrows = requests, dashed = responses.*
 
 ---
 
@@ -314,7 +314,7 @@ _Figure 2: SHIELD End-to-End Sequence Diagram_
 
 ### 5.1 Ed25519 for Device Signatures
 
-Ed25519 (Edwards-curve Digital Signature Algorithm over Curve25519) is selected for device-level signing for three reasons. First, it produces compact 64-byte signatures with fast constant-time signing and verification operations — critical for low-latency capture workflows. Second, its security is grounded in the hardness of the discrete logarithm problem over a twisted Edwards curve with a cofactor of 8, providing approximately 128-bit security. Third, and critically for mobile deployment, Ed25519 is natively supported by the Apple Secure Enclave and Android StrongBox Keymaster, enabling true hardware-bound keys that are never exposed to application-layer code. Unlike RSA-2048 (whose 112-bit security is borderline adequate) or ECDSA with NIST P-256 (which requires careful nonce management to avoid catastrophic failures), Ed25519 is deterministic and immune to nonce reuse vulnerabilities.
+Ed25519 (Edwards-curve Digital Signature Algorithm over Curve25519) is selected for device-level signing for three reasons. First, it produces compact 64-byte signatures with fast constant-time signing and verification operations - critical for low-latency capture workflows. Second, its security is grounded in the hardness of the discrete logarithm problem over a twisted Edwards curve with a cofactor of 8, providing approximately 128-bit security. Third, and critically for mobile deployment, Ed25519 is natively supported by the Apple Secure Enclave and Android StrongBox Keymaster, enabling true hardware-bound keys that are never exposed to application-layer code. Unlike RSA-2048 (whose 112-bit security is borderline adequate) or ECDSA with NIST P-256 (which requires careful nonce management to avoid catastrophic failures), Ed25519 is deterministic and immune to nonce reuse vulnerabilities.
 
 ### 5.2 ECDSA P-384 for Organizational Signatures
 
@@ -322,15 +322,15 @@ The organizational intermediate CA key uses ECDSA P-384, providing 192-bit secur
 
 ### 5.3 SHA-256 Content Hashing
 
-SHA-256 is used for all content hashing. Its 256-bit output provides 128-bit collision resistance under the birthday bound, requiring an adversary to evaluate the hash function approximately 2^128 times to find a collision — a figure that exceeds the estimated computational budget of any nation-state over any reasonable time horizon using classical hardware. SHA-256 is also hardware-accelerated on all modern mobile SoCs, adding negligible latency to the capture workflow. A future upgrade path to SHA-3-256 is explicitly noted in the system design, as SHA-3's Keccak sponge construction provides algorithmic diversity against any undiscovered structural weaknesses in the SHA-2 Merkle-Damgård design.
+SHA-256 is used for all content hashing. Its 256-bit output provides 128-bit collision resistance under the birthday bound, requiring an adversary to evaluate the hash function approximately 2^128 times to find a collision - a figure that exceeds the estimated computational budget of any nation-state over any reasonable time horizon using classical hardware. SHA-256 is also hardware-accelerated on all modern mobile SoCs, adding negligible latency to the capture workflow. A future upgrade path to SHA-3-256 is explicitly noted in the system design, as SHA-3's Keccak sponge construction provides algorithmic diversity against any undiscovered structural weaknesses in the SHA-2 Merkle-Damgård design.
 
 ### 5.4 RFC 3161 Trusted Timestamps
 
-A naive system that relies on the device's local clock for timestamps is vulnerable to clock manipulation — an attacker who compromises a device can backdate or forward-date content. RFC 3161 trusted timestamps solve this by having a mutually trusted third party (the TSA) cryptographically attest that a specific hash value existed at a specific time according to the TSA's authoritative clock. The TimeStampToken is a signed CMS object; its validity does not depend on the device or organization's clocks at all. This eliminates replay attacks that attempt to repurpose old, legitimately signed content in new contexts.
+A naive system that relies on the device's local clock for timestamps is vulnerable to clock manipulation - an attacker who compromises a device can backdate or forward-date content. RFC 3161 trusted timestamps solve this by having a mutually trusted third party (the TSA) cryptographically attest that a specific hash value existed at a specific time according to the TSA's authoritative clock. The TimeStampToken is a signed CMS object; its validity does not depend on the device or organization's clocks at all. This eliminates replay attacks that attempt to repurpose old, legitimately signed content in new contexts.
 
 ### 5.5 X.509 PKI and Certificate Transparency
 
-The hierarchical PKI (Root CA → Org Intermediate CA → Device Certificate) establishes a chain of trust that is globally auditable. Certificate Transparency (RFC 9162) requires all issued certificates to be logged in append-only public logs (e.g., Google's Argon log). This prevents a compromised CA from issuing fraudulent certificates without the issuance being publicly detectable — any certificate appearing in a verification chain that is not present in the CT logs is treated as invalid. This closes the backdoor of CA-level compromise as an undetectable attack vector.
+The hierarchical PKI (Root CA → Org Intermediate CA → Device Certificate) establishes a chain of trust that is globally auditable. Certificate Transparency (RFC 9162) requires all issued certificates to be logged in append-only public logs (e.g., Google's Argon log). This prevents a compromised CA from issuing fraudulent certificates without the issuance being publicly detectable - any certificate appearing in a verification chain that is not present in the CT logs is treated as invalid. This closes the backdoor of CA-level compromise as an undetectable attack vector.
 
 ### 5.6 TLS 1.3 Transport Security
 
@@ -363,7 +363,7 @@ SHIELD aligns with the Coalition for Content Authenticity and Provenance (C2PA) 
 
 - NIST FIPS 186-5. *Digital Signature Standard (DSS)*. National Institute of Standards and Technology, 2023.
 - Bernstein, D.J. et al. *High-speed high-security signatures*. CHES 2011. (Ed25519)
-- Adams, C. et al. *Internet X.509 Public Key Infrastructure — Time-Stamp Protocol (TSP)*. RFC 3161, IETF, 2001.
+- Adams, C. et al. *Internet X.509 Public Key Infrastructure - Time-Stamp Protocol (TSP)*. RFC 3161, IETF, 2001.
 - Laurie, B. et al. *Certificate Transparency*. RFC 9162, IETF, 2021.
 - C2PA Technical Specification v2.0. *Coalition for Content Authenticity and Provenance*, 2023. https://c2pa.org/specifications/
 - NIST SP 800-131A Rev. 2. *Transitioning the Use of Cryptographic Algorithms and Key Lengths*. 2019.

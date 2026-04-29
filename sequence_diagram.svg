@@ -1,0 +1,115 @@
+<svg viewBox="0 0 1100 820" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1B3A5C"/></marker>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2E6DA4"/></marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#27AE60"/></marker>
+  </defs>
+  <rect width="1100" height="820" fill="#F8FAFD"/>
+  <rect x="0" y="0" width="1100" height="44" fill="#1B3A5C"/>
+  <text x="550" y="28" text-anchor="middle" fill="white" font-size="16" font-weight="bold">SHIELD Protocol — End-to-End Sequence Diagram</text>
+
+  <!-- Lifeline boxes -->
+  <rect x="30" y="56" width="148" height="38" rx="5" fill="#2E6DA4"/>
+  <text x="104" y="79" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Capture Device</text>
+  <rect x="218" y="56" width="148" height="38" rx="5" fill="#2E6DA4"/>
+  <text x="292" y="79" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Org Signing Server</text>
+  <rect x="406" y="56" width="148" height="38" rx="5" fill="#2E6DA4"/>
+  <text x="480" y="79" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Timestamp Authority</text>
+  <rect x="594" y="56" width="148" height="38" rx="5" fill="#2E6DA4"/>
+  <text x="668" y="79" text-anchor="middle" fill="white" font-size="11" font-weight="bold">CDN / CMS</text>
+  <rect x="782" y="56" width="148" height="38" rx="5" fill="#2E6DA4"/>
+  <text x="856" y="79" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Verify Endpoint</text>
+  <rect x="970" y="56" width="108" height="38" rx="5" fill="#1B3A5C"/>
+  <text x="1024" y="79" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Consumer</text>
+
+  <!-- Lifelines -->
+  <line x1="104" y1="94" x2="104" y2="790" stroke="#AECFE8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="292" y1="94" x2="292" y2="790" stroke="#AECFE8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="480" y1="94" x2="480" y2="790" stroke="#AECFE8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="668" y1="94" x2="668" y2="790" stroke="#AECFE8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="856" y1="94" x2="856" y2="790" stroke="#AECFE8" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="1024" y1="94" x2="1024" y2="790" stroke="#AECFE8" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- PHASE 1 -->
+  <rect x="8" y="102" width="210" height="18" rx="3" fill="#D6E4F0"/>
+  <text x="113" y="115" text-anchor="middle" fill="#1B3A5C" font-size="10" font-weight="bold">PHASE 1 — DEVICE ENROLLMENT</text>
+  <rect x="80" y="124" width="48" height="16" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="104" y="136" text-anchor="middle" fill="#7D6608" font-size="8.5">KeyGen (SE)</text>
+  <line x1="128" y1="148" x2="278" y2="148" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="203" y="144" text-anchor="middle" fill="#1B3A5C" font-size="8.5">PubKey + DeviceMetadata</text>
+  <rect x="268" y="152" width="48" height="16" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="292" y="164" text-anchor="middle" fill="#7D6608" font-size="8.5">Issue Cert</text>
+  <line x1="278" y1="176" x2="128" y2="176" stroke="#2E6DA4" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="203" y="172" text-anchor="middle" fill="#2E6DA4" font-size="8.5">X.509v3 Device Cert (chain to Root CA)</text>
+
+  <!-- PHASE 2 -->
+  <rect x="8" y="190" width="240" height="18" rx="3" fill="#D6E4F0"/>
+  <text x="128" y="203" text-anchor="middle" fill="#1B3A5C" font-size="10" font-weight="bold">PHASE 2 — CAPTURE &amp; DEVICE SIGN</text>
+  <rect x="80" y="212" width="48" height="16" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="104" y="224" text-anchor="middle" fill="#7D6608" font-size="8.5">SHA-256</text>
+  <rect x="80" y="232" width="48" height="16" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="104" y="244" text-anchor="middle" fill="#7D6608" font-size="8.5">Ed25519 Sign</text>
+  <rect x="14" y="252" width="182" height="30" rx="3" fill="#FFFDE7" stroke="#F0C040" stroke-width="1"/>
+  <text x="105" y="264" text-anchor="middle" fill="#7D6608" font-size="8">H_content = SHA-256(media_bytes)</text>
+  <text x="105" y="276" text-anchor="middle" fill="#7D6608" font-size="8">&#x3C3;_dev = Ed25519_Sign(Claim) [Secure Enclave]</text>
+
+  <!-- PHASE 3 -->
+  <rect x="8" y="292" width="272" height="18" rx="3" fill="#D6E4F0"/>
+  <text x="144" y="305" text-anchor="middle" fill="#1B3A5C" font-size="10" font-weight="bold">PHASE 3 — ORG CO-SIGN &amp; TIMESTAMP</text>
+  <line x1="128" y1="318" x2="278" y2="318" stroke="#1B3A5C" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="203" y="312" text-anchor="middle" fill="#1B3A5C" font-size="8.5" font-weight="bold">Device-Signed Claim  [mTLS 1.3]</text>
+  <rect x="268" y="322" width="48" height="16" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="292" y="334" text-anchor="middle" fill="#7D6608" font-size="8">Verify &#x3C3;_dev</text>
+  <line x1="316" y1="346" x2="466" y2="346" stroke="#2E6DA4" stroke-width="1.5" marker-end="url(#arrb)"/>
+  <text x="391" y="340" text-anchor="middle" fill="#2E6DA4" font-size="8.5">H_manifest (RFC 3161 req)</text>
+  <rect x="456" y="350" width="48" height="16" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="480" y="362" text-anchor="middle" fill="#7D6608" font-size="8">TSA Sign</text>
+  <line x1="466" y1="374" x2="316" y2="374" stroke="#2E6DA4" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="391" y="370" text-anchor="middle" fill="#2E6DA4" font-size="8.5">TimeStampToken (TSA sig)</text>
+  <rect x="268" y="378" width="48" height="16" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="292" y="390" text-anchor="middle" fill="#7D6608" font-size="8">P-384 Sign</text>
+  <rect x="210" y="398" width="200" height="34" rx="3" fill="#FFFDE7" stroke="#F0C040" stroke-width="1"/>
+  <text x="310" y="410" text-anchor="middle" fill="#7D6608" font-size="8">Final C2PA Package: media +</text>
+  <text x="310" y="421" text-anchor="middle" fill="#7D6608" font-size="8">&#x3C3;_dev + &#x3C3;_org + TSToken + cert_chain</text>
+
+  <!-- PHASE 4 -->
+  <rect x="8" y="442" width="180" height="18" rx="3" fill="#D6E4F0"/>
+  <text x="98" y="455" text-anchor="middle" fill="#1B3A5C" font-size="10" font-weight="bold">PHASE 4 — DISTRIBUTION</text>
+  <line x1="316" y1="468" x2="654" y2="468" stroke="#1B3A5C" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="485" y="462" text-anchor="middle" fill="#1B3A5C" font-size="8.5" font-weight="bold">C2PA Asset Package  [TLS 1.3]</text>
+  <rect x="644" y="472" width="48" height="16" rx="2" fill="#D6E4F0" stroke="#2E6DA4" stroke-width="1"/>
+  <text x="668" y="484" text-anchor="middle" fill="#1B3A5C" font-size="8">Store Asset</text>
+  <rect x="596" y="492" width="200" height="16" rx="3" fill="#FFFDE7" stroke="#F0C040" stroke-width="1"/>
+  <text x="696" y="504" text-anchor="middle" fill="#7D6608" font-size="8">Generate QR: /v1/asset/{uuid}</text>
+
+  <!-- PHASE 5 -->
+  <rect x="8" y="520" width="200" height="18" rx="3" fill="#D6E4F0"/>
+  <text x="108" y="533" text-anchor="middle" fill="#1B3A5C" font-size="10" font-weight="bold">PHASE 5 — VERIFICATION</text>
+  <line x1="1010" y1="546" x2="870" y2="546" stroke="#1B3A5C" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="940" y="540" text-anchor="middle" fill="#1B3A5C" font-size="8.5" font-weight="bold">Scan QR / asset_uuid</text>
+  <line x1="842" y1="560" x2="682" y2="560" stroke="#2E6DA4" stroke-width="1.5" marker-end="url(#arrb)"/>
+  <text x="762" y="554" text-anchor="middle" fill="#2E6DA4" font-size="8.5">Fetch manifest + media</text>
+  <line x1="682" y1="574" x2="842" y2="574" stroke="#2E6DA4" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="762" y="570" text-anchor="middle" fill="#2E6DA4" font-size="8.5">C2PA Package</text>
+  <rect x="832" y="580" width="48" height="82" rx="3" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="856" y="592" text-anchor="middle" fill="#7D6608" font-size="7.5">Cert chain</text>
+  <text x="856" y="603" text-anchor="middle" fill="#7D6608" font-size="7.5">OCSP check</text>
+  <text x="856" y="614" text-anchor="middle" fill="#7D6608" font-size="7.5">Verify &#x3C3;_org</text>
+  <text x="856" y="625" text-anchor="middle" fill="#7D6608" font-size="7.5">Verify &#x3C3;_dev</text>
+  <text x="856" y="636" text-anchor="middle" fill="#7D6608" font-size="7.5">TSA token</text>
+  <text x="856" y="647" text-anchor="middle" fill="#7D6608" font-size="7.5">Hash match</text>
+  <line x1="870" y1="670" x2="1010" y2="670" stroke="#27AE60" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrg)"/>
+  <text x="940" y="664" text-anchor="middle" fill="#27AE60" font-size="8.5" font-weight="bold">AUTHENTIC / TAMPERED / REVOKED</text>
+
+  <!-- Legend -->
+  <rect x="8" y="700" width="560" height="56" rx="5" fill="#EBF3FB" stroke="#2E6DA4" stroke-width="1"/>
+  <text x="284" y="716" text-anchor="middle" fill="#1B3A5C" font-size="10" font-weight="bold">Legend</text>
+  <line x1="24" y1="730" x2="76" y2="730" stroke="#1B3A5C" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="86" y="734" fill="#1B3A5C" font-size="9">Authenticated Request (mTLS/TLS)</text>
+  <line x1="230" y1="730" x2="282" y2="730" stroke="#2E6DA4" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="292" y="734" fill="#1B3A5C" font-size="9">Response / Return Message</text>
+  <line x1="430" y1="730" x2="482" y2="730" stroke="#27AE60" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrg)"/>
+  <text x="492" y="734" fill="#1B3A5C" font-size="9">Verification Result</text>
+  <rect x="24" y="742" width="18" height="12" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="50" y="752" fill="#1B3A5C" font-size="9">Local Cryptographic Operation  |  SE = Secure Enclave (hardware-bound)</text>
+</svg>

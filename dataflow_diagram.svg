@@ -1,0 +1,142 @@
+<svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1B3A5C"/></marker>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2E6DA4"/></marker>
+    <marker id="arror" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#C0392B"/></marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#27AE60"/></marker>
+  </defs>
+  <rect width="1000" height="620" fill="#F8FAFD"/>
+  <rect x="0" y="0" width="1000" height="44" fill="#1B3A5C"/>
+  <text x="500" y="28" text-anchor="middle" fill="white" font-size="15" font-weight="bold">SHIELD — C2PA Manifest Assembly &amp; Data Flow Diagram</text>
+
+  <!-- ── INPUT: Raw Media ── -->
+  <rect x="30" y="70" width="150" height="50" rx="6" fill="#2E6DA4" stroke="#1B3A5C" stroke-width="1.5"/>
+  <text x="105" y="90" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Raw Media</text>
+  <text x="105" y="106" text-anchor="middle" fill="#AECFE8" font-size="9">(photo / video bytes)</text>
+
+  <!-- SHA-256 box -->
+  <rect x="240" y="70" width="130" height="50" rx="6" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1.5"/>
+  <text x="305" y="90" text-anchor="middle" fill="#7D6608" font-size="11" font-weight="bold">SHA-256</text>
+  <text x="305" y="106" text-anchor="middle" fill="#7D6608" font-size="9">content_hash</text>
+  <line x1="180" y1="95" x2="236" y2="95" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- C2PA Claim block -->
+  <rect x="430" y="56" width="190" height="130" rx="6" fill="#EBF3FB" stroke="#2E6DA4" stroke-width="2"/>
+  <text x="525" y="75" text-anchor="middle" fill="#1B3A5C" font-size="11" font-weight="bold">C2PA Claim</text>
+  <rect x="442" y="82" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="92" text-anchor="middle" fill="#1B3A5C" font-size="8">content_hash (SHA-256)</text>
+  <rect x="442" y="98" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="108" text-anchor="middle" fill="#1B3A5C" font-size="8">capture_timestamp (ISO8601)</text>
+  <rect x="442" y="114" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="124" text-anchor="middle" fill="#1B3A5C" font-size="8">device_cert_thumbprint</text>
+  <rect x="442" y="130" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="140" text-anchor="middle" fill="#1B3A5C" font-size="8">gps_coordinates (lat/lon)</text>
+  <rect x="442" y="146" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="156" text-anchor="middle" fill="#1B3A5C" font-size="8">asset_uuid (UUIDv4)</text>
+  <rect x="442" y="162" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="172" text-anchor="middle" fill="#1B3A5C" font-size="8">org_id</text>
+
+  <!-- Arrow: hash to claim -->
+  <line x1="370" y1="95" x2="426" y2="110" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Ed25519 Sign (Secure Enclave) -->
+  <rect x="240" y="160" width="130" height="50" rx="6" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1.5"/>
+  <text x="305" y="180" text-anchor="middle" fill="#7D6608" font-size="10" font-weight="bold">Ed25519 Sign</text>
+  <text x="305" y="194" text-anchor="middle" fill="#7D6608" font-size="8">Secure Enclave</text>
+  <text x="305" y="204" text-anchor="middle" fill="#7D6608" font-size="8">(hardware-bound)</text>
+
+  <!-- Claim box to Ed25519 -->
+  <line x1="430" y1="150" x2="374" y2="175" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Device Cert -->
+  <rect x="30" y="185" width="150" height="40" rx="6" fill="#2E6DA4" stroke="#1B3A5C" stroke-width="1.5"/>
+  <text x="105" y="200" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Device Cert</text>
+  <text x="105" y="214" text-anchor="middle" fill="#AECFE8" font-size="8">X.509v3 (Org CA signed)</text>
+  <line x1="180" y1="198" x2="236" y2="183" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- sigma_device -->
+  <rect x="240" y="238" width="130" height="30" rx="6" fill="#D5F5E3" stroke="#27AE60" stroke-width="1.5"/>
+  <text x="305" y="258" text-anchor="middle" fill="#1B6B3A" font-size="10" font-weight="bold">&#x3C3;_device</text>
+  <line x1="305" y1="210" x2="305" y2="234" stroke="#27AE60" stroke-width="1.5" marker-end="url(#arrg)"/>
+
+  <!-- ── Org Signing Server ── -->
+  <!-- Manifest block -->
+  <rect x="430" y="240" width="190" height="100" rx="6" fill="#EBF3FB" stroke="#2E6DA4" stroke-width="2"/>
+  <text x="525" y="259" text-anchor="middle" fill="#1B3A5C" font-size="11" font-weight="bold">C2PA Manifest</text>
+  <rect x="442" y="266" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="276" text-anchor="middle" fill="#1B3A5C" font-size="8">C2PA Claim (from Phase 2)</text>
+  <rect x="442" y="282" width="166" height="12" rx="2" fill="#D5F5E3"/>
+  <text x="525" y="292" text-anchor="middle" fill="#1B6B3A" font-size="8">&#x3C3;_device + device_cert</text>
+  <rect x="442" y="298" width="166" height="12" rx="2" fill="#D6E4F0"/>
+  <text x="525" y="308" text-anchor="middle" fill="#1B3A5C" font-size="8">org_metadata</text>
+  <rect x="442" y="314" width="166" height="12" rx="2" fill="#FADBD8"/>
+  <text x="525" y="324" text-anchor="middle" fill="#7B241C" font-size="8">TimeStampToken (RFC 3161)</text>
+
+  <!-- sigma_device + Claim feeds manifest -->
+  <line x1="370" y1="253" x2="426" y2="270" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="370" y1="182" x2="426" y2="250" stroke="#27AE60" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrg)"/>
+
+  <!-- TSA box -->
+  <rect x="700" y="260" width="140" height="50" rx="6" fill="#FADBD8" stroke="#C0392B" stroke-width="1.5"/>
+  <text x="770" y="280" text-anchor="middle" fill="#7B241C" font-size="10" font-weight="bold">TSA (RFC 3161)</text>
+  <text x="770" y="295" text-anchor="middle" fill="#7B241C" font-size="8">Signs H_manifest + clock</text>
+
+  <!-- Manifest to TSA -->
+  <line x1="620" y1="290" x2="696" y2="282" stroke="#C0392B" stroke-width="1.5" marker-end="url(#arror)"/>
+  <text x="658" y="280" text-anchor="middle" fill="#C0392B" font-size="8">H_manifest</text>
+  <!-- TSA back -->
+  <line x1="696" y1="296" x2="620" y2="318" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arror)"/>
+  <text x="658" y="312" text-anchor="middle" fill="#C0392B" font-size="8">TSToken</text>
+
+  <!-- ECDSA P-384 Sign -->
+  <rect x="700" y="360" width="140" height="50" rx="6" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1.5"/>
+  <text x="770" y="380" text-anchor="middle" fill="#7D6608" font-size="10" font-weight="bold">ECDSA P-384</text>
+  <text x="770" y="394" text-anchor="middle" fill="#7D6608" font-size="8">Org Intermediate Key (HSM)</text>
+  <line x1="620" y1="340" x2="696" y2="375" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- sigma_org -->
+  <rect x="700" y="432" width="140" height="28" rx="6" fill="#D5F5E3" stroke="#27AE60" stroke-width="1.5"/>
+  <text x="770" y="451" text-anchor="middle" fill="#1B6B3A" font-size="10" font-weight="bold">&#x3C3;_org</text>
+  <line x1="770" y1="410" x2="770" y2="428" stroke="#27AE60" stroke-width="1.5" marker-end="url(#arrg)"/>
+
+  <!-- Final C2PA Asset Package -->
+  <rect x="370" y="490" width="280" height="100" rx="6" fill="#1B3A5C" stroke="#0D2236" stroke-width="2"/>
+  <text x="510" y="510" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Final C2PA Asset Package</text>
+  <rect x="382" y="518" width="256" height="13" rx="2" fill="#2E6DA4"/>
+  <text x="510" y="529" text-anchor="middle" fill="white" font-size="8.5">media_file (original bytes)</text>
+  <rect x="382" y="534" width="256" height="13" rx="2" fill="#2E6DA4"/>
+  <text x="510" y="545" text-anchor="middle" fill="white" font-size="8.5">C2PA Manifest (claim + &#x3C3;_device + &#x3C3;_org)</text>
+  <rect x="382" y="550" width="256" height="13" rx="2" fill="#C0392B"/>
+  <text x="510" y="561" text-anchor="middle" fill="white" font-size="8.5">TimeStampToken (RFC 3161)</text>
+  <rect x="382" y="566" width="256" height="13" rx="2" fill="#2E6DA4"/>
+  <text x="510" y="577" text-anchor="middle" fill="white" font-size="8.5">cert_chain: [device, org_intermediate, root_ca]</text>
+
+  <!-- Manifest box down to final package -->
+  <line x1="510" y1="340" x2="510" y2="486" stroke="#1B3A5C" stroke-width="2" marker-end="url(#arr)"/>
+  <!-- sigma_org down to final package -->
+  <line x1="770" y1="460" x2="650" y2="490" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrg)"/>
+
+  <!-- QR / CDN / Verifier row -->
+  <rect x="30" y="520" width="130" height="38" rx="6" fill="#2E6DA4" stroke="#1B3A5C" stroke-width="1.5"/>
+  <text x="95" y="538" text-anchor="middle" fill="white" font-size="10" font-weight="bold">CDN / CMS</text>
+  <text x="95" y="551" text-anchor="middle" fill="#AECFE8" font-size="8">(untrusted storage)</text>
+  <line x1="366" y1="540" x2="164" y2="540" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="265" y="534" text-anchor="middle" fill="#1B3A5C" font-size="8">Upload [TLS 1.3]</text>
+
+  <rect x="30" y="575" width="130" height="38" rx="6" fill="#27AE60" stroke="#1B6B3A" stroke-width="1.5"/>
+  <text x="95" y="591" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Verifier</text>
+  <text x="95" y="605" text-anchor="middle" fill="white" font-size="8">Full chain validation</text>
+  <line x1="95" y1="558" x2="95" y2="571" stroke="#1B3A5C" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Legend -->
+  <rect x="700" y="490" width="280" height="100" rx="5" fill="#EBF3FB" stroke="#2E6DA4" stroke-width="1"/>
+  <text x="840" y="508" text-anchor="middle" fill="#1B3A5C" font-size="10" font-weight="bold">Field Color Key</text>
+  <rect x="716" y="516" width="18" height="12" rx="2" fill="#D6E4F0" stroke="#2E6DA4" stroke-width="1"/>
+  <text x="742" y="527" fill="#1B3A5C" font-size="9">Claim / Manifest field</text>
+  <rect x="716" y="532" width="18" height="12" rx="2" fill="#D5F5E3" stroke="#27AE60" stroke-width="1"/>
+  <text x="742" y="543" fill="#1B3A5C" font-size="9">Digital signature (&#x3C3;)</text>
+  <rect x="716" y="548" width="18" height="12" rx="2" fill="#FADBD8" stroke="#C0392B" stroke-width="1"/>
+  <text x="742" y="559" fill="#1B3A5C" font-size="9">Timestamp token</text>
+  <rect x="716" y="564" width="18" height="12" rx="2" fill="#FEF9E7" stroke="#D4AC0D" stroke-width="1"/>
+  <text x="742" y="575" fill="#1B3A5C" font-size="9">Crypto operation</text>
+</svg>

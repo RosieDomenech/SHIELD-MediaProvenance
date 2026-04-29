@@ -6,7 +6,7 @@
   </defs>
   <rect width="1100" height="820" fill="#F8FAFD"/>
   <rect x="0" y="0" width="1100" height="44" fill="#1B3A5C"/>
-  <text x="550" y="28" text-anchor="middle" fill="white" font-size="16" font-weight="bold">SHIELD Protocol — End-to-End Sequence Diagram</text>
+  <text x="550" y="28" text-anchor="middle" fill="white" font-size="16" font-weight="bold">SHIELD Protocol: End-to-End Sequence Diagram</text>
 
   <!-- Lifeline boxes -->
   <rect x="30" y="56" width="148" height="38" rx="5" fill="#2E6DA4"/>

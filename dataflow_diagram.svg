@@ -7,7 +7,7 @@
   </defs>
   <rect width="1000" height="620" fill="#F8FAFD"/>
   <rect x="0" y="0" width="1000" height="44" fill="#1B3A5C"/>
-  <text x="500" y="28" text-anchor="middle" fill="white" font-size="15" font-weight="bold">SHIELD — C2PA Manifest Assembly &amp; Data Flow Diagram</text>
+  <text x="500" y="28" text-anchor="middle" fill="white" font-size="15" font-weight="bold">SHIELD: C2PA Manifest Assembly &amp; Data Flow Diagram</text>
 
   <!-- ── INPUT: Raw Media ── -->
   <rect x="30" y="70" width="150" height="50" rx="6" fill="#2E6DA4" stroke="#1B3A5C" stroke-width="1.5"/>
